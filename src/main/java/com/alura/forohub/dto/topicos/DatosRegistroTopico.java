@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 public record DatosRegistroTopico(
         @NotBlank String titulo,
         @NotBlank String mensaje,
-        @NotNull
+
         @Future
         LocalDateTime fechaCreacion,
-        @NotNull Estado status,
+
+        Estado status,
         @NotNull Usuario autor,
         @NotNull Curso curso
 ) {
