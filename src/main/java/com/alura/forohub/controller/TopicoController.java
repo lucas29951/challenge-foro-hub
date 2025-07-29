@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/topicos")
 @SecurityRequirement(name = "bearer-key")
@@ -32,7 +34,7 @@ public class TopicoController {
     @PostMapping
     @Transactional
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroTopico datos, UriComponentsBuilder uriComponentsBuilder) {
-        var topico = new Topico(datos);
+        var topico = new Topico(datos, LocalDateTime.now());
         var detalleTopico = gestorDeTopicos.postear(datos);
 
         var uri = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(detalleTopico.id()).toUri();
