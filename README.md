@@ -23,19 +23,6 @@
 
 ---
 
-## ⚙️ Estructura actual del proyecto
-
-- Configuración inicial completada.
-- Dependencias necesarias agregadas en `pom.xml`.
-- Archivo `application.properties` configurado con conexión a base de datos y otras variables de entorno.
-- Migraciones Flyway creadas para las siguientes entidades:
-    - `Usuarios`
-    - `Cursos`
-    - `Topicos`
-    - `Respuestas`
-
----
-
 ## 📁 Estructura de carpetas esperada
 
 ```
@@ -68,15 +55,13 @@ src
 ### ⚙️ Variables en `application.properties`
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/forohub_db
+spring.datasource.url=jdbc:mysql://localhost/forohub_db
 spring.datasource.username=tu_usuario
 spring.datasource.password=tu_contraseña
 
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true
 spring.flyway.enabled=true
-
-springdoc.api-docs.path=/api-docs
 ````
 
 > ⚠️ Asegúrate de que tu base de datos esté creada antes de iniciar la app.
@@ -85,11 +70,7 @@ springdoc.api-docs.path=/api-docs
 
 ## ✍️ Próximas tareas
 
-* [ ] Implementación de entidades JPA con anotaciones (`@Entity`, `@ManyToOne`, etc.).
-* [ ] Creación de controladores REST (CRUD para Tópicos).
-* [ ] Autenticación y autorización con Spring Security + JWT.
-* [ ] Documentación Swagger (ya instalado SpringDocs).
-* [ ] Tests de endpoints y lógica de negocio.
+* [ ] Tests de endpoints
 
 ---
 
