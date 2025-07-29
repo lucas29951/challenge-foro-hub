@@ -27,25 +27,32 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String correoElectronico;
+    private String email;
     private String contrasena;
 
     public Usuario(DatosRegistroUsuario datos) {
         this.id = null;
         this.nombre = datos.nombre();
-        this.correoElectronico = datos.correoElectronico();
+        this.email = datos.email();
         this.contrasena = datos.contrasena();
     }
 
-    public void actualizarInformacion(@Valid DatosActualizacionUsuario datos) {
+    public Usuario(DatosRegistroUsuario datos, String contrasenaEncriptada) {
+        this.id = null;
+        this.nombre = datos.nombre();
+        this.email = datos.email();
+        this.contrasena = contrasenaEncriptada;
+    }
+
+    public void actualizarInformacion(@Valid DatosActualizacionUsuario datos, String contrasenaEncriptada) {
         if (datos.nombre() != null) {
             this.nombre = datos.nombre();
         }
-        if (datos.correoElectronico() != null) {
-            this.correoElectronico = datos.correoElectronico();
+        if (datos.email() != null) {
+            this.email = datos.email();
         }
-        if (datos.contrasena() != null) {
-            this.contrasena = datos.contrasena();
+        if (!contrasenaEncriptada.equalsIgnoreCase("")) {
+            this.contrasena = contrasenaEncriptada;
         }
     }
 
@@ -61,7 +68,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nombre;
+        return email;
     }
 
     @Override
