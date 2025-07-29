@@ -5,7 +5,7 @@ import com.alura.forohub.model.Usuario;
 public record DatosListaUsuario(
         Long id,
         String nombre,
-        String correoElectronico,
+        String email,
         String contrasena
 ) {
 
@@ -13,7 +13,7 @@ public record DatosListaUsuario(
         this(
                 usuario.getId(),
                 usuario.getNombre(),
-                usuario.getCorreoElectronico(),
+                usuario.getEmail(),
                 usuario.getContrasena()
         );
     }
