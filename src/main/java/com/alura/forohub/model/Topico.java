@@ -23,7 +23,7 @@ public class Topico {
     private Long id;
     private String titulo;
     private String mensaje;
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime fecha_creacion;
     @Enumerated(EnumType.STRING)
     private Estado status;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,27 +33,18 @@ public class Topico {
     @JoinColumn(name = "curso")
     private Curso curso;
 
-    public Topico(DatosRegistroTopico datos) {
+
+    public Topico(DatosRegistroTopico datos, Usuario usuario, Curso curso) {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
-        this.fechaCreacion = datos.fechaCreacion();
+        this.fecha_creacion = LocalDateTime.now();
         this.status = Estado.ABIERTO;
-        this.autor = datos.autor();
-        this.curso = datos.curso();
+        this.autor = usuario;
+        this.curso = curso;
     }
 
-    public Topico(DatosRegistroTopico datos, LocalDateTime fecha) {
-        this.id = null;
-        this.titulo = datos.titulo();
-        this.mensaje = datos.mensaje();
-        this.fechaCreacion = fecha;
-        this.status = Estado.ABIERTO;
-        this.autor = datos.autor();
-        this.curso = datos.curso();
-    }
-
-    public void actualizarInformacion(@Valid DatosActualizacionTopico datos) {
+    public void actualizarInformacion(@Valid DatosActualizacionTopico datos, Usuario usuario, Curso curso) {
         if (datos.titulo() != null) {
             this.titulo = datos.titulo();
         }
@@ -63,12 +54,12 @@ public class Topico {
         if (datos.status() != null) {
             this.status = datos.status();
         }
-        if (datos.autor() != null) {
-            this.autor = datos.autor();
+        if (usuario != null) {
+            this.autor = usuario;
         }
-        if (datos.curso() != null) {
-            this.curso = datos.curso();
+        if (curso != null) {
+            this.curso = curso;
         }
-        this.fechaCreacion = LocalDateTime.now();
+        this.fecha_creacion = LocalDateTime.now();
     }
 }
