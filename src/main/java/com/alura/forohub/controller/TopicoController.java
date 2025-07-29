@@ -6,6 +6,7 @@ import com.alura.forohub.dto.topicos.DatosListaTopico;
 import com.alura.forohub.dto.topicos.DatosRegistroTopico;
 import com.alura.forohub.model.Topico;
 import com.alura.forohub.repository.TopicoRepository;
+import com.alura.forohub.service.GestionDeTopicos;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,18 @@ public class TopicoController {
     @Autowired
     private TopicoRepository repository;
 
-    @Transactional
+    @Autowired
+    private GestionDeTopicos gestorDeTopicos;
+
     @PostMapping
+    @Transactional
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroTopico datos, UriComponentsBuilder uriComponentsBuilder) {
         var topico = new Topico(datos);
-        repository.save(topico);
+        var detalleTopico = gestorDeTopicos.postear(datos);
 
-        var uri = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+        var uri = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(detalleTopico.id()).toUri();
 
-        return ResponseEntity.created(uri).body(new DatosDetalleTopico(topico));
+        return ResponseEntity.created(uri).body(detalleTopico);
     }
 
     @GetMapping
