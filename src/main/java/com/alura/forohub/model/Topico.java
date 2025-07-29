@@ -38,7 +38,17 @@ public class Topico {
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
         this.fechaCreacion = datos.fechaCreacion();
-        this.status = datos.status();
+        this.status = Estado.ABIERTO;
+        this.autor = datos.autor();
+        this.curso = datos.curso();
+    }
+
+    public Topico(DatosRegistroTopico datos, LocalDateTime fecha) {
+        this.id = null;
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.fechaCreacion = fecha;
+        this.status = Estado.ABIERTO;
         this.autor = datos.autor();
         this.curso = datos.curso();
     }
@@ -50,9 +60,6 @@ public class Topico {
         if (datos.mensaje() != null) {
             this.mensaje = datos.mensaje();
         }
-        if (datos.fechaCreacion() != null) {
-            this.fechaCreacion = datos.fechaCreacion();
-        }
         if (datos.status() != null) {
             this.status = datos.status();
         }
@@ -62,5 +69,6 @@ public class Topico {
         if (datos.curso() != null) {
             this.curso = datos.curso();
         }
+        this.fechaCreacion = LocalDateTime.now();
     }
 }
