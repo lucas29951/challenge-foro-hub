@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -25,10 +26,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     @PostMapping
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroUsuario datos, UriComponentsBuilder uriComponentsBuilder) {
-        var usuario = new Usuario(datos);
+        String contrasenaEncriptada = passwordEncoder.encode(datos.contrasena());
+        var usuario = new Usuario(datos, contrasenaEncriptada);
         repository.save(usuario);
 
         var uri = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
@@ -37,7 +42,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListaUsuario>> listar(@PageableDefault(size = 10, sort = {"correoElectronico"})Pageable paginacion) {
+    public ResponseEntity<Page<DatosListaUsuario>> listar(@PageableDefault(size = 10, sort = {"email"})Pageable paginacion) {
         var page = repository.findAll(paginacion).map(DatosListaUsuario::new);
 
         return ResponseEntity.ok(page);
@@ -46,8 +51,9 @@ public class UsuarioController {
     @Transactional
     @PutMapping
     public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionUsuario datos) {
+        String contrasenaEncriptada = passwordEncoder.encode(datos.contrasena());
         var usuario = repository.getReferenceById(datos.id());
-        usuario.actualizarInformacion(datos);
+        usuario.actualizarInformacion(datos, contrasenaEncriptada);
 
         return ResponseEntity.ok(new DatosDetalleUsuario(usuario));
     }
