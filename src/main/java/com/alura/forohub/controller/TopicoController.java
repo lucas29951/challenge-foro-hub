@@ -5,7 +5,9 @@ import com.alura.forohub.dto.topicos.DatosDetalleTopico;
 import com.alura.forohub.dto.topicos.DatosListaTopico;
 import com.alura.forohub.dto.topicos.DatosRegistroTopico;
 import com.alura.forohub.model.Topico;
+import com.alura.forohub.repository.CursoRepository;
 import com.alura.forohub.repository.TopicoRepository;
+import com.alura.forohub.repository.UsuarioRepository;
 import com.alura.forohub.service.GestionDeTopicos;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -34,7 +36,6 @@ public class TopicoController {
     @PostMapping
     @Transactional
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroTopico datos, UriComponentsBuilder uriComponentsBuilder) {
-        var topico = new Topico(datos, LocalDateTime.now());
         var detalleTopico = gestorDeTopicos.postear(datos);
 
         var uri = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(detalleTopico.id()).toUri();
@@ -52,10 +53,9 @@ public class TopicoController {
     @Transactional
     @PutMapping
     public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionTopico datos) {
-        var topico = repository.getReferenceById(datos.id());
-        topico.actualizarInformacion(datos);
+        var detalleTopico = gestorDeTopicos.actualizar(datos);
 
-        return ResponseEntity.ok(new DatosDetalleTopico(topico));
+        return ResponseEntity.ok(detalleTopico);
     }
 
     @Transactional
