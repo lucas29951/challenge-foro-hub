@@ -11,10 +11,10 @@ public record DatosListaTopico(
         Long id,
         String titulo,
         String mensaje,
-        LocalDateTime fechaCreacion,
+        LocalDateTime fecha_creacion,
         Estado status,
-        Usuario autor,
-        Curso curso
+        Long autor,
+        Long curso
 ) {
 
     public DatosListaTopico(Topico topico) {
@@ -22,10 +22,10 @@ public record DatosListaTopico(
                 topico.getId(),
                 topico.getTitulo(),
                 topico.getMensaje(),
-                topico.getFechaCreacion(),
+                topico.getFecha_creacion(),
                 topico.getStatus(),
-                topico.getAutor(),
-                topico.getCurso()
+                topico.getAutor().getId(),
+                topico.getCurso().getId()
         );
     }
 }

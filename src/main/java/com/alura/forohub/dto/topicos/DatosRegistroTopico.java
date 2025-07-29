@@ -14,10 +14,10 @@ public record DatosRegistroTopico(
         @NotBlank String mensaje,
 
         @Future
-        LocalDateTime fechaCreacion,
+        LocalDateTime fecha_creacion,
 
         Estado status,
-        @NotNull Usuario autor,
-        @NotNull Curso curso
+        @NotNull Long autor,
+        @NotNull Long curso
 ) {
 }

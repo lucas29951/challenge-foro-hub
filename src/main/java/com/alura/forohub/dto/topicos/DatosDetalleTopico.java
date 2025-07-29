@@ -11,7 +11,7 @@ public record DatosDetalleTopico(
         Long id,
         String titulo,
         String mensaje,
-        LocalDateTime fechaCreacion,
+        LocalDateTime fecha_creacion,
         Estado status,
         Long idAutor,
         Long idCurso
@@ -22,7 +22,7 @@ public record DatosDetalleTopico(
                 topico.getId(),
                 topico.getTitulo(),
                 topico.getMensaje(),
-                topico.getFechaCreacion(),
+                topico.getFecha_creacion(),
                 topico.getStatus(),
                 topico.getAutor().getId(),
                 topico.getCurso().getId()

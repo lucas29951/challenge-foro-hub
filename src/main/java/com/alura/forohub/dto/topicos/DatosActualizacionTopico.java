@@ -11,9 +11,9 @@ public record DatosActualizacionTopico(
         @NotNull Long id,
         String titulo,
         String mensaje,
-        LocalDateTime fechaCreacion,
+        LocalDateTime fecha_creacion,
         Estado status,
-        Usuario autor,
-        Curso curso
+        Long autor,
+        Long curso
 ) {
 }
